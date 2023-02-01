@@ -1,0 +1,29 @@
+﻿<Window x:Class="Personal_Nutritionist.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Personal_Nutritionist"
+        mc:Ignorable="d"
+        xmlns:views="clr-namespace:Personal_Nutritionist.Views"
+        xmlns:viewmodels="clr-namespace:Personal_Nutritionist.ViewModels"
+        Title="Personal Nutritionist" FontFamily="Comic Sans MS" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Height="450" Width="800">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type viewmodels:UserHomeViewModel}">
+                <views:UserHomePage/>
+            </DataTemplate> 
+            <DataTemplate DataType="{x:Type viewmodels:AdminHomeViewModel}">
+                <views:AdminHomePage/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
+                <views:LoginView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:RegistrationViewModel}">
+                <views:RegistrationView/>
+            </DataTemplate>
+        </Grid.Resources>
+        <ContentControl Content= "{Binding CurrentViewModel}"/>
+    </Grid>
+</Window>

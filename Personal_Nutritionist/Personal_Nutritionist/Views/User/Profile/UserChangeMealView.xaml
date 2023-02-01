@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Personal_Nutritionist.Views.User.UserChangeMealView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Personal_Nutritionist.Views"
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             d:DesignHeight="450" d:DesignWidth="550">
+    <Grid>
+        <Rectangle Height="360" Fill="White" VerticalAlignment="Top" Margin="10,30" RadiusY="25" RadiusX="25">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBBBBBB" Direction="0" BlurRadius="15" RenderingBias="Quality" ShadowDepth="1"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <StackPanel Width="550" Margin="120 0 20 0">
+            <StackPanel Margin="0 30 100 10" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <TextBlock Text="{Binding SelectedType}" FontSize="22" 
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}" />
+                <TextBlock Text="{Binding SelectedDate,StringFormat='yyyy-MM-dd'}"
+                           FontSize="22"
+                           Margin="10 0 0 0"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}" />
+            </StackPanel>
+            <ListView x:Name="linksListView" Grid.Row="1" SelectedItem="{Binding SelectedFood}" Height="300" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ItemsSource="{Binding DisplayedFood}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
+                        <Style.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="IsSelected" Value="True"/>
+                            </MultiTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">Product name</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Calories}">Calories</GridViewColumn>
+                        <GridViewColumn Width="120">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button     BorderBrush="#180124" Background="#c678f0"  
+                                             x:Name="Delete"
+                                            Content="Delete"
+                                            Command="{Binding Path=DataContext.DeleteMeal,  RelativeSource={RelativeSource AncestorType=ListView} }"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+
+                </ListView.View>
+            </ListView>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Add recipe" 
+                Margin="0 30 100 10" 
+                Command="{Binding NavigateUserAddRecipeMeal}" 
+                Width="180" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                   BorderBrush="#180124" Background="#c678f0"  
+                Foreground="Black"
+                Style="{StaticResource MaterialDesignRaisedButton}" Cursor="Hand" >
+                </Button>
+                <Button Content="Add product"  Grid.Column="1"
+                Margin="0 30 100 10" 
+                Command="{Binding NavigateUserAddProductMeal}" 
+                Width="180" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                   BorderBrush="#180124" Background="#c678f0" 
+                Foreground="Black"
+                Style="{StaticResource MaterialDesignRaisedButton}" Cursor="Hand" >
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

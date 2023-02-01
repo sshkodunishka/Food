@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="Personal_Nutritionist.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Personal_Nutritionist.Components"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:valid="clr-namespace:Personal_Nutritionist.Helpers.Validation"
+             mc:Ignorable="d" 
+             >
+    <Grid Height="500" Width="350">
+        <Rectangle Height="280" VerticalAlignment="Top" Grid.RowSpan="2">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#dcb5ee"/>
+                    <GradientStop Color="#8408c7" Offset="1"/>
+                    <GradientStop Color="#b36cdb" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <TextBlock Text="Personal Nutritionist" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,26,0,0" Foreground="#29023d" FontSize="22"/>
+        <Image x:Name="image" Source="../../Image/home.png"  Width="100" Height="120" VerticalAlignment="Top"  Margin="60" Stretch="Uniform" StretchDirection="Both"/>
+
+        <Rectangle Height="252" Fill="White" VerticalAlignment="Bottom" Margin="35,0,35,88" RadiusY="25" RadiusX="25">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBBBBBB" Direction="0" BlurRadius="15" RenderingBias="Quality" ShadowDepth="1"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <Grid Height="240" VerticalAlignment="Bottom" Margin="35,0,35.4,100" Grid.Row="1">
+            <TextBlock Text="Login" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5" Foreground="#4d5680" FontSize="22"/>
+            <StackPanel VerticalAlignment="Center" Margin="10">
+                <TextBox x:Name="loginTextBox" 
+                         materialDesign:HintAssist.Hint="Login"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Margin="0,10"
+                         FontSize="16"
+                         MaxLength="40">
+                    <TextBox.Text>
+                        <Binding Path="Login" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <valid:NotEmptyFieldRule/>
+                                <valid:NotContainSpaceRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <PasswordBox x:Name="passwordBox" materialDesign:HintAssist.Hint="Password" FontSize="16">
+                    <PasswordBox.Style>
+                        <Style TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                            <Style.Setters>
+                                <Setter Property="local:PasswordBoxAssistant.BindPassword" Value="True"/>
+                                <Setter Property="local:PasswordBoxAssistant.BoundPassword">
+                                    <Setter.Value>
+                                        <Binding Path="Password" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                            <Binding.ValidationRules>
+                                                <valid:NotEmptyFieldRule/>
+                                                <valid:NotContainSpaceRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style.Setters>
+                        </Style>
+                    </PasswordBox.Style>
+                </PasswordBox>
+                <Label Content="{Binding Error}" Foreground="Red"/>
+            </StackPanel>
+        </Grid>
+        <Button Content="Login" Width="150" 
+                Command="{Binding LoginCommand}" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                Margin="0,115"  BorderBrush="#8408c7" Background="#c678f0"  Foreground="#29023d" Cursor="Hand">
+            <Button.Style >
+                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=loginTextBox}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=passwordBox}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="Registration" 
+                Command="{Binding RegistrationCommand}" 
+                Width="150" HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" Margin="0,75" 
+                 BorderBrush="#8408c7" Background="#c678f0" 
+                Foreground="#29023d" Cursor="Hand"/>
+    </Grid>
+</UserControl>
